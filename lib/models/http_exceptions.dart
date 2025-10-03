@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scalex_chatbot/l10n/app_localizations.dart';
@@ -17,12 +16,11 @@ Future<T> handleErrors<T>(
 ) async {
   try {
     return await operation();
-  } on SocketException catch (e) {
-    if (kDebugMode) debugPrint("SocketException: $e");
-    throw CustomHttpException(AppLocalizations.of(context)!.no_internet_access);
   } on FormatException catch (e) {
     if (kDebugMode) debugPrint("FormatException: $e");
-    throw CustomHttpException(AppLocalizations.of(context)!.data_processing_error);
+    throw CustomHttpException(
+      AppLocalizations.of(context)!.data_processing_error,
+    );
   } on StateError catch (e) {
     if (kDebugMode) debugPrint("StateError: $e");
     throw CustomHttpException(AppLocalizations.of(context)!.unknown_error);

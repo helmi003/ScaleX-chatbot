@@ -33,6 +33,7 @@ class ChatProvider with ChangeNotifier {
         }),
       );
       final data = json.decode(response.body);
+      print(data);
       if (!context.mounted) return '';
       if (response.statusCode == 200) {
         if (data['choices'] != null &&
@@ -46,6 +47,8 @@ class ChatProvider with ChangeNotifier {
         } else {
           throw Exception(AppLocalizations.of(context)!.model_unknown_error);
         }
+      } else if (response.statusCode == 404) {
+        throw Exception(AppLocalizations.of(context)!.model_dont_exist_anymore);
       } else {
         throw Exception(AppLocalizations.of(context)!.unknown_error);
       }
@@ -95,6 +98,7 @@ class ChatProvider with ChangeNotifier {
           throw Exception(AppLocalizations.of(context)!.model_unknown_error);
         }
       } else {
+        print(response.statusCode);
         throw Exception(AppLocalizations.of(context)!.unknown_error);
       }
     });

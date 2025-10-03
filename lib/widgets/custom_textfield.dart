@@ -31,7 +31,7 @@ class CustomTextfield extends StatelessWidget {
             label,
             style: TextStyle(
               color: darkColor,
-              fontSize: 10.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -66,10 +66,10 @@ class CustomTextfield extends StatelessWidget {
               borderSide: const BorderSide(color: redColor),
             ),
             hintText: label,
-            hintStyle: TextStyle(color: dSilverColor, fontSize: 10.sp),
-            suffixIcon: Icon(icon, color: dSilverColor, size: 10.sp),
+            hintStyle: TextStyle(color: dSilverColor, fontSize: 14.sp),
+            suffixIcon: Icon(icon, color: dSilverColor, size: 14.sp),
           ),
-          style: TextStyle(color: darkColor, fontSize: 10.sp),
+          style: TextStyle(color: darkColor, fontSize: 14.sp),
         ),
       ],
     );

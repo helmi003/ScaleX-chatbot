@@ -73,38 +73,40 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final userProvider = context.watch<UserProvider>();
 
     if (_isLoading) {
-      return Scaffold(
+      return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: lightColor,
+            title: Text(
+              AppLocalizations.of(context)!.tab_history,
+              style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+            ),
+          ),
+          backgroundColor: lightColor,
+          body: const Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+
+    return SafeArea(
+      child: Scaffold(
         appBar: AppBar(
           backgroundColor: lightColor,
           title: Text(
             AppLocalizations.of(context)!.tab_history,
             style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
           ),
+          actions: [
+            if (_hasHistory)
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: _createNewChat,
+                tooltip: AppLocalizations.of(context)!.new_chat,
+              ),
+          ],
         ),
         backgroundColor: lightColor,
-        body: const Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: lightColor,
-        title: Text(
-          AppLocalizations.of(context)!.tab_history,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          if (_hasHistory)
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: _createNewChat,
-              tooltip: AppLocalizations.of(context)!.new_chat,
-            ),
-        ],
-      ),
-      backgroundColor: lightColor,
-      body: SafeArea(
-        child: _rooms.isEmpty
+        body: _rooms.isEmpty
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

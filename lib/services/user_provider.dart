@@ -194,7 +194,6 @@ class UserProvider with ChangeNotifier {
     await auth.signOut();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('user');
-    await _roomManager.clearUserData();
     user = UserModel("", "", "", "");
     notifyListeners();
   }

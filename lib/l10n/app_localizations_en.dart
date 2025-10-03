@@ -250,4 +250,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get model_unknown_error => 'An unknown error occurred with the model.';
+
+  @override
+  String get model_dont_exist_anymore =>
+      'The selected model doesn\'t exist anymore. Please choose another one.';
 }

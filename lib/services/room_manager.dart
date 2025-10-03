@@ -155,12 +155,5 @@ class RoomManager {
     return now.difference(lastUpdated).inDays >= 1;
   }
 
-  Future<void> clearUserData() async {
-    await _roomsBox.clear();
-    await _chatRoomsBox.clear();
-    final box = await _summaryBox;
-    await box.clear();
-  }
-
   String get currentUserId => _currentUserId;
 }

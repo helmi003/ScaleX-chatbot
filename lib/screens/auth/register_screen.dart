@@ -34,14 +34,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: lightColor,
-        body: SafeArea(
-          child: Center(
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          backgroundColor: lightColor,
+          body: Center(
             child: SingleChildScrollView(
               child: Form(
                 key: formKey,
@@ -59,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Text(
                       AppLocalizations.of(context)!.register_description,
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w300,
                         color: textColor,
                       ),
@@ -184,14 +184,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     RichText(
                       text: TextSpan(
                         text: AppLocalizations.of(context)!.you_have_an_account,
-                        style: TextStyle(color: textColor, fontSize: 10.sp),
+                        style: TextStyle(color: textColor, fontSize: 14.sp),
                         children: [
                           TextSpan(
                             text:
                                 " ${AppLocalizations.of(context)!.common_login}",
                             style: TextStyle(
                               color: primaryColor,
-                              fontSize: 10.sp,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
                             ),
                             recognizer: TapGestureRecognizer()

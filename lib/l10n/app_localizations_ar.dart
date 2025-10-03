@@ -242,8 +242,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get model_not_working =>
-      'The selected model is not working. Please try another one.';
+      'النموذج المحدد لا يعمل. يرجى تجربة نموذج آخر.';
 
   @override
-  String get model_unknown_error => 'An unknown error occurred with the model.';
+  String get model_unknown_error => 'حدث خطأ غير معروف مع النموذج.';
+
+  @override
+  String get model_dont_exist_anymore =>
+      'النموذج المحدد لم يعد موجودًا. يرجى اختيار نموذج آخر.';
 }

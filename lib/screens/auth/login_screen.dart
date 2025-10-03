@@ -31,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: lightColor,
-        body: SafeArea(
-          child: Center(
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          backgroundColor: lightColor,
+          body: Center(
             child: SingleChildScrollView(
               child: Form(
                 key: formKey,
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       AppLocalizations.of(context)!.login_description,
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w300,
                         color: textColor,
                       ),
@@ -117,14 +117,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     RichText(
                       text: TextSpan(
                         text: AppLocalizations.of(context)!.no_account,
-                        style: TextStyle(color: textColor, fontSize: 10.sp),
+                        style: TextStyle(color: textColor, fontSize: 14.sp),
                         children: [
                           TextSpan(
                             text:
                                 " ${AppLocalizations.of(context)!.common_register}",
                             style: TextStyle(
                               color: primaryColor,
-                              fontSize: 10.sp,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
                             ),
                             recognizer: TapGestureRecognizer()

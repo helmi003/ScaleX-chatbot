@@ -24,17 +24,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     UserModel user = Provider.of<UserProvider>(context).user;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: lightColor,
-        title: Text(
-          AppLocalizations.of(context)!.tab_profile,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: lightColor,
+          title: Text(
+            AppLocalizations.of(context)!.tab_profile,
+            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      backgroundColor: lightColor,
-      body: SafeArea(
-        child: Center(
+        backgroundColor: lightColor,
+        body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

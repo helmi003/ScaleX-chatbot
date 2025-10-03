@@ -90,25 +90,25 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: lightColor,
-        title: Text(
-          AppLocalizations.of(context)!.chat_summary,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: lightColor,
+          title: Text(
+            AppLocalizations.of(context)!.chat_summary,
+            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            if (_hasSummary)
+              IconButton(
+                icon: const Icon(Icons.refresh, color: darkColor),
+                onPressed: _isLoading ? null : _generateSummary,
+                tooltip: AppLocalizations.of(context)!.refresh_summary,
+              ),
+          ],
         ),
-        actions: [
-          if (_hasSummary)
-            IconButton(
-              icon: const Icon(Icons.refresh, color: darkColor),
-              onPressed: _isLoading ? null : _generateSummary,
-              tooltip: AppLocalizations.of(context)!.refresh_summary,
-            ),
-        ],
-      ),
-      backgroundColor: lightColor,
-      body: SafeArea(
-        child: Padding(
+        backgroundColor: lightColor,
+        body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

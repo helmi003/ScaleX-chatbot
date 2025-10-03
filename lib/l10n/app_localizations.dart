@@ -541,6 +541,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An unknown error occurred with the model.'**
   String get model_unknown_error;
+
+  /// No description provided for @model_dont_exist_anymore.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected model doesn\'t exist anymore. Please choose another one.'**
+  String get model_dont_exist_anymore;
 }
 
 class _AppLocalizationsDelegate

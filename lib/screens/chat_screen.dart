@@ -177,17 +177,17 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor: lightColor,
-        appBar: ChatAppBar(selectedModel, (model) {
-          if (model != null) {
-            setState(() => selectedModel = model);
-          }
-        }),
-        body: SafeArea(
-          child: Stack(
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          backgroundColor: lightColor,
+          appBar: ChatAppBar(selectedModel, (model) {
+            if (model != null) {
+              setState(() => selectedModel = model);
+            }
+          }),
+          body: Stack(
             children: [
               Column(
                 children: [
