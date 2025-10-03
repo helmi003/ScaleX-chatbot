@@ -32,32 +32,36 @@ class _ReadMoreMarkdownState extends State<ReadMoreMarkdown> {
             data: widget.text.length > 300
                 ? '${widget.text.substring(0, 300)}...'
                 : widget.text,
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-              p: widget.style,
-            ),
+            styleSheet: MarkdownStyleSheet.fromTheme(
+              Theme.of(context),
+            ).copyWith(p: widget.style),
           ),
           secondChild: MarkdownBody(
             data: widget.text,
-            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-              p: widget.style,
-            ),
+            styleSheet: MarkdownStyleSheet.fromTheme(
+              Theme.of(context),
+            ).copyWith(p: widget.style),
           ),
           crossFadeState: expanded
               ? CrossFadeState.showSecond
               : CrossFadeState.showFirst,
           duration: const Duration(milliseconds: 200),
         ),
-        const SizedBox(height: 8),
-        GestureDetector(
-          onTap: () => setState(() => expanded = !expanded),
-          child: Text(
-            expanded ? widget.lessText : widget.moreText,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.blueGrey,
-            ),
-          ),
-        ),
+        widget.text.length > 300
+            ? Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: GestureDetector(
+                  onTap: () => setState(() => expanded = !expanded),
+                  child: Text(
+                    expanded ? widget.lessText : widget.moreText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                ),
+            )
+            : const SizedBox(),
       ],
     );
   }
