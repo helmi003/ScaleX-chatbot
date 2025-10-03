@@ -99,8 +99,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failed_to_generate_summary => 'Failed to generate summary';
 
   @override
-  String get generate_summary =>
+  String get generate_summary_description =>
       'Generate a summary to see insights about your chat patterns';
+
+  @override
+  String get generate_summary => 'Generate a summary';
 
   @override
   String get give_me_a_motivational_quote => 'Give me a motivational quote';
@@ -224,4 +227,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get user_dont_exist => 'User doesn\'t exist';
+
+  @override
+  String get user_not_found => 'User not found';
+
+  @override
+  String get wrong_password => 'Wrong password';
+
+  @override
+  String get email_already_used =>
+      'The email address is already in use by another account.';
+
+  @override
+  String get weak_password => 'The password is too weak.';
+
+  @override
+  String get logout_confirmation => 'Are you sure you want to log out?';
 }

@@ -1,25 +1,18 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:scalex_chatbot/models/user_model.dart';
 import 'package:scalex_chatbot/screens/auth/register_screen.dart';
 import 'package:scalex_chatbot/screens/tab_screen.dart';
 import 'package:scalex_chatbot/services/user_provider.dart';
 import 'package:scalex_chatbot/utils/colors.dart';
-import 'package:scalex_chatbot/widgets/error_popup.dart';
 import 'package:scalex_chatbot/widgets/button_widget.dart';
 import 'package:scalex_chatbot/widgets/custom_password_field.dart';
 import 'package:scalex_chatbot/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
 import 'package:scalex_chatbot/l10n/app_localizations.dart';
 import 'package:scalex_chatbot/widgets/language_toggel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,7 +25,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  final FirebaseAuth auth = FirebaseAuth.instance;
   bool obsecure = true;
   bool isLoading = false;
   final formKey = GlobalKey<FormState>();
@@ -60,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 130.h,
                     ),
                     LanguageToggle(),
+                    SizedBox(height: 20.h),
                     Text(
                       AppLocalizations.of(context)!.login_description,
                       style: TextStyle(
@@ -118,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       primaryColor,
                       false,
                       lightColor,
+                      isLoading: isLoading,
                     ),
                     SizedBox(height: 20.h),
                     RichText(
@@ -144,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 20.h),
                   ],
                 ),
               ),
@@ -155,60 +150,22 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> login() async {
-    if (formKey.currentState?.validate() ?? false) {
-      try {
-        setState(() {
-          isLoading = true;
-        });
-        await auth.signInWithEmailAndPassword(
-          email: email.text,
-          password: password.text,
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    setState(() => isLoading = true);
+
+    await Provider.of<UserProvider>(context, listen: false).login(
+      email: email.text,
+      password: password.text,
+      context: context,
+      onSuccess: (userData) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          TabScreen.routeName,
+          (Route<dynamic> route) => false,
         );
-        DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-            await FirebaseFirestore.instance
-                .collection('users')
-                .doc(auth.currentUser!.uid)
-                .get();
-        print("exists: ${userSnapshot.exists}");
-        if (userSnapshot.exists) {
-          final prefs = await SharedPreferences.getInstance();
-          UserModel userData = UserModel.fromJson(userSnapshot.data()!);
-          prefs.setString('user', json.encode(userData.toJson()));
-          if (!mounted) return;
-          Provider.of<UserProvider>(context, listen: false).setUser(userData);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            TabScreen.routeName,
-            (Route<dynamic> route) => false,
-          );
-        } else {
-          if (!mounted) return;
-          showDialog(
-            context: context,
-            builder: ((context) {
-              return ErrorPopup(
-                AppLocalizations.of(context)!.common_alert,
-                AppLocalizations.of(context)!.user_dont_exist,
-              );
-            }),
-          );
-        }
-      } catch (onError) {
-        print("error: $onError");
-        showDialog(
-          context: context,
-          builder: ((context) {
-            return ErrorPopup(
-              AppLocalizations.of(context)!.common_alert,
-              AppLocalizations.of(context)!.unknown_error,
-            );
-          }),
-        );
-      } finally {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
+      },
+    );
+
+    if (mounted) setState(() => isLoading = false);
   }
 }

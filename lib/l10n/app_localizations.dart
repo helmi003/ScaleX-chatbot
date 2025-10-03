@@ -266,10 +266,16 @@ abstract class AppLocalizations {
   /// **'Failed to generate summary'**
   String get failed_to_generate_summary;
 
-  /// No description provided for @generate_summary.
+  /// No description provided for @generate_summary_description.
   ///
   /// In en, this message translates to:
   /// **'Generate a summary to see insights about your chat patterns'**
+  String get generate_summary_description;
+
+  /// No description provided for @generate_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate a summary'**
   String get generate_summary;
 
   /// No description provided for @give_me_a_motivational_quote.
@@ -493,6 +499,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'User doesn\'t exist'**
   String get user_dont_exist;
+
+  /// No description provided for @user_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get user_not_found;
+
+  /// No description provided for @wrong_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password'**
+  String get wrong_password;
+
+  /// No description provided for @email_already_used.
+  ///
+  /// In en, this message translates to:
+  /// **'The email address is already in use by another account.'**
+  String get email_already_used;
+
+  /// No description provided for @weak_password.
+  ///
+  /// In en, this message translates to:
+  /// **'The password is too weak.'**
+  String get weak_password;
+
+  /// No description provided for @logout_confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logout_confirmation;
 }
 
 class _AppLocalizationsDelegate

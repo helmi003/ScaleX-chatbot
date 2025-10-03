@@ -1,25 +1,18 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:scalex_chatbot/models/user_model.dart';
 import 'package:scalex_chatbot/screens/auth/login_screen.dart';
 import 'package:scalex_chatbot/screens/tab_screen.dart';
 import 'package:scalex_chatbot/services/user_provider.dart';
 import 'package:scalex_chatbot/utils/colors.dart';
-import 'package:scalex_chatbot/widgets/error_popup.dart';
 import 'package:scalex_chatbot/widgets/button_widget.dart';
 import 'package:scalex_chatbot/widgets/custom_password_field.dart';
 import 'package:scalex_chatbot/widgets/custom_textfield.dart';
 import 'package:scalex_chatbot/l10n/app_localizations.dart';
 import 'package:scalex_chatbot/widgets/language_toggel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,7 +23,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController email = TextEditingController();
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
@@ -63,6 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: 130.h,
                     ),
                     LanguageToggle(),
+                    SizedBox(height: 20.h),
                     Text(
                       AppLocalizations.of(context)!.register_description,
                       style: TextStyle(
@@ -185,6 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       primaryColor,
                       false,
                       lightColor,
+                      isLoading: isLoading,
                     ),
                     SizedBox(height: 20.h),
                     RichText(
@@ -211,6 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 20.h),
                   ],
                 ),
               ),
@@ -222,47 +217,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> register() async {
-    if (formKey.currentState?.validate() ?? false) {
-      try {
-        setState(() => isLoading = true);
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    setState(() => isLoading = true);
 
-        final result = await auth.createUserWithEmailAndPassword(
-          email: email.text,
-          password: password.text,
-        );
-
-        final userModel = UserModel(
-          result.user!.uid,
-          firstName.text,
-          lastName.text,
-          email.text,
-        );
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userModel.uid)
-            .set(userModel.toJson());
-
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString('user', json.encode(userModel.toJson()));
-        if (!mounted) return;
-        Provider.of<UserProvider>(context, listen: false).setUser(userModel);
+    await Provider.of<UserProvider>(context, listen: false).register(
+      email: email.text,
+      password: password.text,
+      firstName: firstName.text,
+      lastName: lastName.text,
+      context: context,
+      onSuccess: (userModel) {
         Navigator.pushNamedAndRemoveUntil(
           context,
           TabScreen.routeName,
           (Route<dynamic> route) => false,
         );
-      } catch (e) {
-        showDialog(
-          context: context,
-          builder: (_) => ErrorPopup(
-            AppLocalizations.of(context)!.common_alert,
-            AppLocalizations.of(context)!.unknown_error,
-          ),
-        );
-      } finally {
-        setState(() => isLoading = false);
-      }
-    }
+      },
+    );
+
+    if (mounted) setState(() => isLoading = false);
   }
 }

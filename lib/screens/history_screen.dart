@@ -18,6 +18,7 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   late RoomManager _roomManager;
   List<ChatRoom> _rooms = [];
+  bool _hasHistory = false;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {
       _rooms = _roomManager.getAllRooms();
       _rooms.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      _hasHistory = _rooms.isNotEmpty;
     });
   }
 
@@ -53,11 +55,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
           style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _createNewChat,
-            tooltip: AppLocalizations.of(context)!.new_chat,
-          ),
+          if (_hasHistory)
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: _createNewChat,
+              tooltip: AppLocalizations.of(context)!.new_chat,
+            ),
         ],
       ),
       backgroundColor: lightColor,
@@ -99,7 +102,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           context: context,
                           builder: (context) => YesOrNoPopup(
                             AppLocalizations.of(context)!.delete_chat,
-                            AppLocalizations.of(context)!.are_you_sure_you_want_to_delete(room.title),
+                            AppLocalizations.of(
+                              context,
+                            )!.are_you_sure_you_want_to_delete(room.title),
                             () {
                               Navigator.of(context).pop(true);
                             },
@@ -113,13 +118,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           _rooms.removeAt(index);
                         });
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(AppLocalizations.of(context)!.deleted_chat(room.title))),
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(
+                                context,
+                              )!.deleted_chat(room.title),
+                            ),
+                          ),
                         );
                       },
                       child: ListTile(
                         title: Text(room.title),
                         subtitle: Text(dateFormat(context, room.createdAt)),
-                        trailing: Text(AppLocalizations.of(context)!.messages_count(room.messages.length)),
+                        trailing: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.messages_count(room.messages.length),
+                        ),
                         onTap: () {
                           Navigator.pushNamed(
                             context,

@@ -97,7 +97,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get failed_to_generate_summary => 'فشل في إنشاء الملخص';
 
   @override
-  String get generate_summary => 'أنشئ ملخصًا لعرض رؤى حول أنماط محادثاتك';
+  String get generate_summary_description =>
+      'أنشئ ملخصًا لعرض رؤى حول أنماط محادثاتك';
+
+  @override
+  String get generate_summary => 'إنشاء ملخص';
 
   @override
   String get give_me_a_motivational_quote => 'أعطني اقتباسًا تحفيزيًا';
@@ -219,4 +223,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get user_dont_exist => 'المستخدم غير موجود';
+
+  @override
+  String get user_not_found => 'المستخدم غير موجود';
+
+  @override
+  String get wrong_password => 'كلمة المرور خاطئة';
+
+  @override
+  String get email_already_used =>
+      'عنوان البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب آخر.';
+
+  @override
+  String get weak_password => 'كلمة المرور ضعيفة جدًا.';
+
+  @override
+  String get logout_confirmation => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
 }

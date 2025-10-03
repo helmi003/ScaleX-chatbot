@@ -5,6 +5,7 @@ import 'package:scalex_chatbot/services/chat_provider.dart';
 import 'package:scalex_chatbot/services/room_manager.dart';
 import 'package:scalex_chatbot/utils/colors.dart';
 import 'package:scalex_chatbot/utils/date_format.dart';
+import 'package:scalex_chatbot/widgets/button_widget.dart';
 import 'package:scalex_chatbot/widgets/error_popup.dart';
 import 'package:scalex_chatbot/l10n/app_localizations.dart';
 
@@ -192,12 +193,20 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             ),
                             SizedBox(height: 10.h),
                             Text(
-                              AppLocalizations.of(context)!.generate_summary,
+                              AppLocalizations.of(context)!.generate_summary_description,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: dSilverColor,
                               ),
+                            ),
+                            SizedBox(height: 10.h),
+                            ButtonWidget(
+                              AppLocalizations.of(context)!.generate_summary,
+                              _generateSummary,
+                              primaryColor,
+                              false,
+                              lightColor,
                             ),
                           ],
                         ),

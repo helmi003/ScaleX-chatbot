@@ -70,7 +70,8 @@
   "edit_message": "Edit Message",
   "explain_flutter_in_simple_terms": "Explain Flutter in simple terms",
   "failed_to_generate_summary": "Failed to generate summary",
-  "generate_summary": "Generate a summary to see insights about your chat patterns",
+  "generate_summary_description": "Generate a summary to see insights about your chat patterns",
+  "generate_summary": "Generate a summary",
   "give_me_a_motivational_quote": "Give me a motivational quote",
   "how_to_improve_productivity": "How to improve productivity?",
   "invalid_email": "This is not a valid email",
@@ -107,5 +108,10 @@
   "your_chat_patterns": "Your Chat Patterns",
   "system_message_summary": "You are a helpful assistant that analyzes conversation patterns and provides concise, insightful summaries. Focus on the main topics, interests, and recurring patterns in the user's messages.",
   "user_message_summary": "Analyze these user messages and provide a brief summary of the user's main interests, common topics, and communication patterns. Keep the summary concise yet meaningful (maximum 2–3 short paragraphs):\n\n{messages}",
-  "user_dont_exist": "User doesn't exist"
+  "user_dont_exist": "User doesn't exist",
+  "user_not_found": "User not found",
+  "wrong_password": "Wrong password",
+  "email_already_used": "The email address is already in use by another account.",
+  "weak_password": "The password is too weak.",
+  "logout_confirmation": "Are you sure you want to log out?"
 }
