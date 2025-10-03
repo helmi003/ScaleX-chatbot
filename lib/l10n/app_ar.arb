@@ -1,0 +1,111 @@
+{
+  "@@locale": "ar",
+  "@are_you_sure_you_want_to_delete": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "@deleted_chat": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "@last_updated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@messages_count": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@welcome_back_user": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@user_message_summary": {
+    "placeholders": {
+      "messages": {
+        "type": "String"
+      }
+    }
+  },
+  "are_you_sure_you_want_to_delete": "هل أنت متأكد أنك تريد حذف \"{title}\"؟",
+  "chat_summary": "ملخص المحادثة",
+  "common_alert": "تنبيه",
+  "common_attention": "انتباه",
+  "common_cancel": "إلغاء",
+  "common_confirm_password": "تأكيد كلمة المرور",
+  "common_first_name": "الاسم الأول",
+  "common_last_name": "اللقب",
+  "common_log_out": "تسجيل الخروج",
+  "common_login": "تسجيل الدخول",
+  "common_message": "رسالة",
+  "common_no": "لا",
+  "common_ok": "حسنًا",
+  "common_password": "كلمة المرور",
+  "common_register": "إنشاء حساب",
+  "common_required": "هذا الحقل مطلوب",
+  "common_save": "حفظ",
+  "common_suggestions": "اقتراحات:",
+  "common_typing": "يكتب...",
+  "common_upper_email": "البريد الإلكتروني",
+  "common_yes": "نعم",
+  "data_processing_error": "حدث خطأ أثناء معالجة البيانات.",
+  "delete_chat": "حذف المحادثة",
+  "deleted_chat": "تم حذف \"{title}\"",
+  "email_required": "يرجى إدخال البريد الإلكتروني",
+  "edit_message": "تعديل الرسالة",
+  "explain_flutter_in_simple_terms": "اشرح Flutter بطريقة مبسطة",
+  "failed_to_generate_summary": "فشل في إنشاء الملخص",
+  "generate_summary": "أنشئ ملخصًا لعرض رؤى حول أنماط محادثاتك",
+  "give_me_a_motivational_quote": "أعطني اقتباسًا تحفيزيًا",
+  "how_to_improve_productivity": "كيف يمكن تحسين الإنتاجية؟",
+  "invalid_email": "البريد الإلكتروني غير صالح",
+  "language_description": "هل ترغب في تعيين هذه اللغة كلغة افتراضية للتطبيق؟",
+  "last_updated": "آخر تحديث: {time}",
+  "login_description": "سجل الدخول للوصول إلى حسابك",
+  "message_copied_to_clipboard": "تم نسخ الرسالة إلى الحافظة",
+  "messages_count": "عدد الرسائل: {count}",
+  "modify_your_message_below": "عدّل رسالتك أدناه.",
+  "new_chat": "محادثة جديدة",
+  "no_account": "ليس لديك حساب؟",
+  "no_chat_history": "لا توجد محادثات بعد.",
+  "no_chat_history_summary": "لا توجد محادثات لإنشاء ملخص.",
+  "no_internet_access": "تعذر الاتصال بالإنترنت!",
+  "no_summary_generated_yet": "لم يتم إنشاء أي ملخص بعد",
+  "not_authorized": "غير مصرح لك بالوصول إلى هذا التطبيق",
+  "passwords_do_not_match": "كلمتا المرور غير متطابقتين",
+  "read_less": "عرض أقل",
+  "read_more": "عرض المزيد",
+  "refresh_summary": "تحديث الملخص",
+  "register_description": "قم بإنشاء حساب جديد",
+  "request_cancelled": "❌ تم إلغاء الطلب.",
+  "scroll_down": "التمرير للأسفل",
+  "server_not_responding": "الخادم لا يستجيب.",
+  "session_expired": "انتهت صلاحية الجلسة.",
+  "start_new_chat": "ابدأ محادثة جديدة",
+  "tab_history": "السجل",
+  "tab_profile": "الملف الشخصي",
+  "tab_summary": "الملخص",
+  "unknown_error": "حدث خطأ غير متوقع",
+  "welcome_back_user": "مرحبًا بعودتك، {name}!",
+  "what_is_ai": "ما هو الذكاء الاصطناعي؟",
+  "you_have_an_account": "هل لديك حساب؟",
+  "your_chat_patterns": "أنماط محادثاتك",
+  "system_message_summary": "أنت مساعد ذكي يقوم بتحليل أنماط المحادثة ويقدّم ملخصات موجزة وهادفة. ركّز على المواضيع الرئيسية، والاهتمامات، والأنماط المتكررة في رسائل المستخدم.",
+  "user_message_summary": "قم بتحليل هذه الرسائل واكتب ملخصًا موجزًا يوضّح اهتمامات المستخدم الرئيسية، والمواضيع الشائعة، وأنماط التواصل. اجعل الملخص مختصرًا وذا مغزى (من فقرتين إلى ثلاث فقرات كحد أقصى):\n\n{messages}",
+  "user_dont_exist": "المستخدم غير موجود"
+}
