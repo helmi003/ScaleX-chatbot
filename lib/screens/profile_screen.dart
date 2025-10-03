@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,6 @@ import 'package:scalex_chatbot/widgets/button_widget.dart';
 import 'package:scalex_chatbot/widgets/language_toggel.dart';
 import 'package:scalex_chatbot/l10n/app_localizations.dart';
 import 'package:scalex_chatbot/widgets/yes_or_no_popup.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,7 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoading = false;
-  final FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     UserModel user = Provider.of<UserProvider>(context).user;
@@ -77,10 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         () async {
           setState(() => isLoading = true);
           try {
-            await auth.signOut();
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            prefs.remove('user');
+            await Provider.of<UserProvider>(context, listen: false).logout();
             if (!context.mounted) return;
             Navigator.pushNamedAndRemoveUntil(
               context,

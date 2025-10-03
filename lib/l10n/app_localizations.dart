@@ -529,6 +529,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to log out?'**
   String get logout_confirmation;
+
+  /// No description provided for @model_not_working.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected model is not working. Please try another one.'**
+  String get model_not_working;
+
+  /// No description provided for @model_unknown_error.
+  ///
+  /// In en, this message translates to:
+  /// **'An unknown error occurred with the model.'**
+  String get model_unknown_error;
 }
 
 class _AppLocalizationsDelegate

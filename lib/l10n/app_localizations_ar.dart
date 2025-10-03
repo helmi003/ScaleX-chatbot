@@ -239,4 +239,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logout_confirmation => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get model_not_working =>
+      'The selected model is not working. Please try another one.';
+
+  @override
+  String get model_unknown_error => 'An unknown error occurred with the model.';
 }

@@ -113,5 +113,7 @@
   "wrong_password": "Wrong password",
   "email_already_used": "The email address is already in use by another account.",
   "weak_password": "The password is too weak.",
-  "logout_confirmation": "Are you sure you want to log out?"
+  "logout_confirmation": "Are you sure you want to log out?",
+  "model_not_working": "The selected model is not working. Please try another one.",
+  "model_unknown_error": "An unknown error occurred with the model."
 }

@@ -33,6 +33,7 @@ class ChatProvider with ChangeNotifier {
         }),
       );
       final data = json.decode(response.body);
+      if (!context.mounted) return '';
       if (response.statusCode == 200) {
         if (data['choices'] != null &&
             data['choices'] is List &&
@@ -41,14 +42,12 @@ class ChatProvider with ChangeNotifier {
             data['choices'][0]['message']['content'] != null) {
           return data['choices'][0]['message']['content'] as String;
         } else if (data['error'] != null) {
-          throw Exception('OpenRouter error: ${data['error']}');
+          throw Exception(AppLocalizations.of(context)!.model_not_working);
         } else {
-          throw Exception('Unexpected OpenRouter response: $data');
+          throw Exception(AppLocalizations.of(context)!.model_unknown_error);
         }
       } else {
-        throw Exception(
-          'Failed to get response: ${response.statusCode} ${response.body}',
-        );
+        throw Exception(AppLocalizations.of(context)!.unknown_error);
       }
     });
   }
@@ -82,6 +81,7 @@ class ChatProvider with ChangeNotifier {
         }),
       );
       final data = json.decode(response.body);
+      if (!context.mounted) return '';
       if (response.statusCode == 200) {
         if (data['choices'] != null &&
             data['choices'] is List &&
@@ -90,14 +90,12 @@ class ChatProvider with ChangeNotifier {
             data['choices'][0]['message']['content'] != null) {
           return data['choices'][0]['message']['content'] as String;
         } else if (data['error'] != null) {
-          throw Exception('OpenRouter error: ${data['error']}');
+          throw Exception(AppLocalizations.of(context)!.model_not_working);
         } else {
-          throw Exception('Unexpected OpenRouter response: $data');
+          throw Exception(AppLocalizations.of(context)!.model_unknown_error);
         }
       } else {
-        throw Exception(
-          'Failed to get response: ${response.statusCode} ${response.body}',
-        );
+        throw Exception(AppLocalizations.of(context)!.unknown_error);
       }
     });
   }

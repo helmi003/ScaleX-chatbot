@@ -15,10 +15,7 @@ class UserProvider with ChangeNotifier {
       .collection("users");
   UserModel user = UserModel("", "", "", "");
   final RoomManager _roomManager = RoomManager();
-  
-  // Get RoomManager instance
   RoomManager get roomManager => _roomManager;
-  
   bool get isLoggedIn => user.isValid;
 
   Future<bool> tryAutoLogin() async {
@@ -194,6 +191,9 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> logout() async {
+    await auth.signOut();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('user');
     await _roomManager.clearUserData();
     user = UserModel("", "", "", "");
     notifyListeners();

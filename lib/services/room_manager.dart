@@ -1,4 +1,3 @@
-// room_manager.dart
 import 'package:hive/hive.dart';
 import 'package:scalex_chatbot/models/chat_message_model.dart';
 import 'package:scalex_chatbot/models/chat_room_model.dart';
@@ -13,7 +12,6 @@ class RoomManager {
   final Uuid _uuid = Uuid();
   late String _currentUserId;
 
-  // User-specific boxes
   Box get _roomsBox => Hive.box('rooms_$_currentUserId');
   Box<ChatRoom> get _chatRoomsBox =>
       Hive.box<ChatRoom>('chatRooms_$_currentUserId');
@@ -24,29 +22,23 @@ class RoomManager {
     return Hive.box('summary_$_currentUserId');
   }
 
-  // Initialize with user
   Future<void> init(UserModel user) async {
     if (!user.isValid) {
       throw Exception('Invalid user provided to RoomManager');
     }
     _currentUserId = user.uid;
-
-    // Initialize user-specific boxes
     await _ensureBoxesOpen();
   }
 
   Future<void> _ensureBoxesOpen() async {
-    // Rooms box for messages
     if (!Hive.isBoxOpen('rooms_$_currentUserId')) {
       await Hive.openBox('rooms_$_currentUserId');
     }
 
-    // Chat rooms box for metadata
     if (!Hive.isBoxOpen('chatRooms_$_currentUserId')) {
       await Hive.openBox<ChatRoom>('chatRooms_$_currentUserId');
     }
 
-    // Summary box
     if (!Hive.isBoxOpen('summary_$_currentUserId')) {
       await Hive.openBox('summary_$_currentUserId');
     }
@@ -163,7 +155,6 @@ class RoomManager {
     return now.difference(lastUpdated).inDays >= 1;
   }
 
-  // Clear all user data (for logout)
   Future<void> clearUserData() async {
     await _roomsBox.clear();
     await _chatRoomsBox.clear();
@@ -171,6 +162,5 @@ class RoomManager {
     await box.clear();
   }
 
-  // Get current user ID
   String get currentUserId => _currentUserId;
 }

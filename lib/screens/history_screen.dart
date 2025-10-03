@@ -1,4 +1,3 @@
-// history_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scalex_chatbot/models/chat_room_model.dart';
