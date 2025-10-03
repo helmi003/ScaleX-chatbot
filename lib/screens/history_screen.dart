@@ -1,7 +1,9 @@
+// history_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scalex_chatbot/models/chat_room_model.dart';
 import 'package:scalex_chatbot/screens/chat_screen.dart';
-import 'package:scalex_chatbot/services/room_manager.dart';
+import 'package:scalex_chatbot/services/user_provider.dart';
 import 'package:scalex_chatbot/utils/colors.dart';
 import 'package:scalex_chatbot/utils/date_format.dart';
 import 'package:scalex_chatbot/widgets/button_widget.dart';
@@ -16,28 +18,50 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  late RoomManager _roomManager;
   List<ChatRoom> _rooms = [];
   bool _hasHistory = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _roomManager = RoomManager();
     _loadRooms();
   }
 
   Future<void> _loadRooms() async {
-    await _roomManager.init();
-    setState(() {
-      _rooms = _roomManager.getAllRooms();
-      _rooms.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      _hasHistory = _rooms.isNotEmpty;
-    });
+    final userProvider = context.read<UserProvider>();
+    
+    if (!userProvider.isLoggedIn) {
+      setState(() {
+        _isLoading = false;
+        _rooms = [];
+        _hasHistory = false;
+      });
+      return;
+    }
+
+    try {
+      await userProvider.roomManager.init(userProvider.user);
+      setState(() {
+        _rooms = userProvider.roomManager.getAllRooms();
+        _rooms.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        _hasHistory = _rooms.isNotEmpty;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _rooms = [];
+        _hasHistory = false;
+      });
+    }
   }
 
   void _createNewChat() {
-    final newRoomId = _roomManager.createNewRoom();
+    final userProvider = context.read<UserProvider>();
+    if (!userProvider.isLoggedIn) return;
+    
+    final newRoomId = userProvider.roomManager.createNewRoom();
     Navigator.pushNamed(
       context,
       ChatScreen.routeName,
@@ -47,6 +71,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
+
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: lightColor,
+          title: Text(
+            AppLocalizations.of(context)!.tab_history,
+            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+          ),
+        ),
+        backgroundColor: lightColor,
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: lightColor,
@@ -113,7 +153,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         return shouldDelete ?? false;
                       },
                       onDismissed: (direction) {
-                        _roomManager.deleteRoom(room.id);
+                        userProvider.roomManager.deleteRoom(room.id);
                         setState(() {
                           _rooms.removeAt(index);
                         });

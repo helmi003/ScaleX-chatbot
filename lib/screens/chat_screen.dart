@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:async/async.dart';
-import 'package:readmore/readmore.dart';
 import 'package:scalex_chatbot/data/ai_models_data.dart';
 import 'package:scalex_chatbot/models/chat_message_model.dart';
 import 'package:scalex_chatbot/services/chat_provider.dart';
-import 'package:scalex_chatbot/services/room_manager.dart';
+import 'package:scalex_chatbot/services/user_provider.dart';
 import 'package:scalex_chatbot/utils/colors.dart';
 import 'package:scalex_chatbot/utils/date_format.dart';
+import 'package:scalex_chatbot/widgets/chat%20widgets/read_more_markdown.dart';
 import 'package:scalex_chatbot/widgets/error_popup.dart';
 import 'package:scalex_chatbot/widgets/chat%20widgets/chat_appbar.dart';
 import 'package:scalex_chatbot/widgets/chat%20widgets/chat_bottombar.dart';
@@ -26,7 +26,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  late RoomManager _roomManager;
   String? _currentRoomId;
 
   CancelableOperation<String>? _currentOperation;
@@ -50,12 +49,17 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
-    _roomManager = RoomManager();
     _initRoom();
   }
 
   Future<void> _initRoom() async {
-    await _roomManager.init();
+    final userProvider = context.read<UserProvider>();
+
+    if (!userProvider.isLoggedIn) {
+      return;
+    }
+    await userProvider.roomManager.init(userProvider.user);
+
     if (!mounted) return;
     final roomId = ModalRoute.of(context)?.settings.arguments as String?;
 
@@ -63,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
       _currentRoomId = roomId;
       _loadRoom(roomId);
     } else {
-      _currentRoomId = _roomManager.createNewRoom();
+      _currentRoomId = userProvider.roomManager.createNewRoom();
       setState(() {
         messages.clear();
       });
@@ -71,7 +75,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _loadRoom(String roomId) {
-    final roomMessages = _roomManager.loadRoomMessages(roomId);
+    final userProvider = context.read<UserProvider>();
+    final roomMessages = userProvider.roomManager.loadRoomMessages(roomId);
     setState(() {
       messages.clear();
       messages.addAll(roomMessages);
@@ -80,7 +85,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _saveRoom() {
     if (_currentRoomId != null) {
-      _roomManager.saveRoomMessages(_currentRoomId!, messages);
+      final userProvider = context.read<UserProvider>();
+      userProvider.roomManager.saveRoomMessages(_currentRoomId!, messages);
     }
   }
 
@@ -162,7 +168,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     if (messages.isEmpty && _currentRoomId != null) {
-      _roomManager.cleanupEmptyRooms();
+      final userProvider = context.read<UserProvider>();
+      userProvider.roomManager.cleanupEmptyRooms();
     }
     _scrollController.dispose();
     super.dispose();
@@ -298,31 +305,18 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ),
                                         ),
                                       Flexible(
-                                        child: ReadMoreText(
-                                          msg.text,
-                                          trimMode: TrimMode.Line,
-                                          trimLines: 3,
+                                        child: ReadMoreMarkdown(
+                                          text: msg.text,
                                           style: TextStyle(
                                             fontSize: 14.sp,
                                             color: textColor,
                                           ),
-                                          trimCollapsedText:
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.read_more,
-                                          trimExpandedText: AppLocalizations.of(
+                                          moreText: AppLocalizations.of(
+                                            context,
+                                          )!.read_more,
+                                          lessText: AppLocalizations.of(
                                             context,
                                           )!.read_less,
-                                          lessStyle: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: dSilverColor,
-                                          ),
-                                          moreStyle: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: dSilverColor,
-                                          ),
                                         ),
                                       ),
                                     ],

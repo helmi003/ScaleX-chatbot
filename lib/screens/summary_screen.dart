@@ -29,8 +29,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
     _loadSavedSummary();
   }
 
-  void _loadSavedSummary() {
-    final saved = _roomManager.getSavedSummary();
+  Future<void> _loadSavedSummary() async {
+    final saved = await _roomManager.getSavedSummary();
     if (saved != null) {
       setState(() {
         _summary = saved['summary'] ?? '';
@@ -193,7 +193,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             ),
                             SizedBox(height: 10.h),
                             Text(
-                              AppLocalizations.of(context)!.generate_summary_description,
+                              AppLocalizations.of(
+                                context,
+                              )!.generate_summary_description,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 14,

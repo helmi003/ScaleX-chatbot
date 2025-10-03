@@ -27,10 +27,6 @@ void main() async {
   Hive.registerAdapter(ChatMessageAdapter());
   Hive.registerAdapter(ChatRoomAdapter());
 
-  await Hive.openBox('rooms');
-  await Hive.openBox<ChatRoom>('chatRooms');
-  await Hive.openBox('summary');
-
   runApp(
     MultiProvider(
       providers: [

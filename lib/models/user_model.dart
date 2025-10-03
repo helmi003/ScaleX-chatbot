@@ -28,4 +28,6 @@ class UserModel {
       'email': email,
     };
   }
+
+  bool get isValid => uid.isNotEmpty;
 }

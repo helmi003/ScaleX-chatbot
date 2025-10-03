@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scalex_chatbot/models/http_exceptions.dart';
 import 'package:scalex_chatbot/models/user_model.dart';
+import 'package:scalex_chatbot/services/room_manager.dart';
 import 'package:scalex_chatbot/widgets/error_popup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scalex_chatbot/l10n/app_localizations.dart';
@@ -13,6 +14,12 @@ class UserProvider with ChangeNotifier {
   final CollectionReference userCollection = FirebaseFirestore.instance
       .collection("users");
   UserModel user = UserModel("", "", "", "");
+  final RoomManager _roomManager = RoomManager();
+  
+  // Get RoomManager instance
+  RoomManager get roomManager => _roomManager;
+  
+  bool get isLoggedIn => user.isValid;
 
   Future<bool> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
@@ -26,8 +33,9 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  void setUser(UserModel user1) {
+  Future<void> setUser(UserModel user1) async {
     user = user1;
+    await _roomManager.init(user);
     notifyListeners();
   }
 
@@ -183,5 +191,11 @@ class UserProvider with ChangeNotifier {
         return {"success": false, "code": e.code};
       }
     });
+  }
+
+  Future<void> logout() async {
+    await _roomManager.clearUserData();
+    user = UserModel("", "", "", "");
+    notifyListeners();
   }
 }
